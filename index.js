@@ -34,19 +34,19 @@ const server = http.createServer((request, response) => {
         // Call mssql's query method passing in params
         req.query("SELECT * FROM customers")
         .then(function (recordset) {
-          response.send(recordset);
+          response.end(recordset);
           conn.close();
         })
         // Handle sql statement execution errors
         .catch(function (err) {
-          response.send(err);
+          response.end(err);
           conn.close();
         })
 
       })
       // Handle connection errors
       .catch(function (err) {
-        response.send(err);
+        response.end(err);
         conn.close();
       });
     }
