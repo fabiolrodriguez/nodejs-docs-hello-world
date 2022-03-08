@@ -39,7 +39,7 @@ jobs:
         sed -i -e "s|DB_PASS|$DB_PASS|g" index.js
         sed -i -e "s|DB_NAME|$DB_NAME|g" index.js
         npm install
-        npm install tedious
+        npm install mssql
         npm run build --if-present
         npm run test --if-present
     - name: 'Deploy to Azure WebApp'
