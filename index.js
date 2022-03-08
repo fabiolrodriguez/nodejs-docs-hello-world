@@ -3,58 +3,34 @@ var sql = require("mssql");
 
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
-    // Import the mssql package
-    
-    // Create a configuration object for our Azure SQL connection parameters
-    var dbConfig = {
-      server: "DB_URL", // Use your SQL server name
-      database: "DB_NAME", // Database to connect to
-      user: "DB_USER", // Use your username
-      password: "DB_PASS", // Use your password
-      port: 1433,
-      // Since we're on Windows Azure, we need to set the following options
-      options: {
-            encrypt: true
-        }
-    };
-
-    // This function connects to a SQL server, executes a SELECT statement,
-    // and displays the results in the console.
-    function getCustomers() {
-      // Create connection instance
-      var conn = new sql.Connection(dbConfig);
-
-      conn.connect()
-      // Successfull connection
-      .then(function () {
-
-        // Create request instance, passing in connection instance
-        var req = new sql.Request(conn);
-
-        // Call mssql's query method passing in params
-        req.query("SELECT * FROM customers")
-        .then(function (recordset) {
-          response.end(recordset);
-          conn.close();
-        })
-        // Handle sql statement execution errors
-        .catch(function (err) {
-          response.end(err);
-          conn.close();
-        })
-
-      })
-      // Handle connection errors
-      .catch(function (err) {
-        response.end(err);
-        conn.close();
-      });
-    }
-
-    getCustomers();
+    response.send("ok");
 });
 
 const port = process.env.PORT || 1337;
 server.listen(port);
 
 console.log("Server running at http://localhost:%d", port);
+
+var Connection = require('tedious').Connection;  
+var config = {  
+    server: 'DB_URL',  //update me
+    authentication: {
+        type: 'default',
+        options: {
+            userName: 'DB_USER', //update me
+            password: 'DB_PASS'  //update me
+        }
+    },
+    options: {
+        // If you are on Microsoft Azure, you need encryption:
+        encrypt: true,
+        database: 'DB_NAME'  //update me
+    }
+};  
+var connection = new Connection(config);  
+connection.on('connect', function(err) {  
+    // If no error, then good to proceed.
+    console.log("Connected");  
+});
+
+connection.connect();
