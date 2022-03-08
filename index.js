@@ -2,7 +2,7 @@ const http = require('http');
 
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Testing Action v2");
+    // response.end("Testing Action v2");
     response.end(process.env.DB_URL);
 });
 
