@@ -1,14 +1,14 @@
-// const http = require('http');
+const http = require('http');
 
-// const server = http.createServer((request, response) => {
-//     response.writeHead(200, {"Content-Type": "text/plain"});
-//     response.end("Testing Action v2");
-// });
+const server = http.createServer((request, response) => {
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    response.end("Testing Action v2");
+});
 
-// const port = process.env.PORT || 1337;
-// server.listen(port);
+const port = process.env.PORT || 1337;
+server.listen(port);
 
-// console.log("Server running at http://localhost:%d", port);
+console.log("Server running at http://localhost:%d", port);
 
 
 const { Connection, Request } = require("tedious");
@@ -30,15 +30,15 @@ const config = {
   }
 };
 
-const connection = new Connection(config);
+// const connection = new Connection(config);
 
-// Attempt to connect and execute queries if connection goes through
-connection.on("connect", err => {
-  if (err) {
-    console.error(err.message);
-  } else {
-    console.log('connected');
-  }
-});
+// // Attempt to connect and execute queries if connection goes through
+// connection.on("connect", err => {
+//   if (err) {
+//     console.error(err.message);
+//   } else {
+//     console.log('connected');
+//   }
+// });
 
-connection.connect();
+// connection.connect();
