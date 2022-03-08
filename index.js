@@ -1,10 +1,10 @@
 const http = require('http');
+var sql = require("mssql");
 
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
     // Import the mssql package
-    var sql = require("mssql");
-
+    
     // Create a configuration object for our Azure SQL connection parameters
     var dbConfig = {
       server: "DB_URL", // Use your SQL server name
