@@ -19,9 +19,6 @@ env:
   DB_PASS: ${{ secrets.DB_PASS }}
   DB_NAME: ${{ secrets.DB_NAME }}
 
-
-
-
 jobs:
   build-and-deploy:
     name: Build and Deploy
