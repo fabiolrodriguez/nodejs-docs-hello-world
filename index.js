@@ -10,7 +10,7 @@
 
 // console.log("Server running at http://localhost:%d", port);
 
-const { Connection, Request } = require("tedious");
+import { Connection, Request } from "tedious";
 
 // Create connection to database
 const config = {
