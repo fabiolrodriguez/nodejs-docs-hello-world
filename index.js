@@ -1,14 +1,9 @@
-// const http = require('http');
+const http = require('http');
 
-// const server = http.createServer((request, response) => {
-//     response.writeHead(200, {"Content-Type": "text/plain"});
-//     response.end("Testing connection");
-// });
+const port = process.env.PORT || 1337;
+server.listen(port);
 
-// const port = process.env.PORT || 1337;
-// server.listen(port);
-
-// console.log("Server running at http://localhost:%d", port);
+console.log("Server running at http://localhost:%d", port);
 
 // Import the mssql package
 
@@ -49,6 +44,10 @@ app.get('/',function(req,res){
       // Call mssql's query method passing in params
       req.query("SELECT * FROM customers")
       .then(function (recordset) {
+        const server = http.createServer((request, response) => {
+          response.writeHead(200, {"Content-Type": "text/plain"});
+          response.end(recordset);
+        });
         console.log(recordset);
         conn.close();
       })
