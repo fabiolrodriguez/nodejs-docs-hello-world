@@ -3,45 +3,62 @@ const http = require('http');
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
     response.end("Testing Action v2");
-    console.log(process.env);
 });
 
 const port = process.env.PORT || 1337;
 server.listen(port);
 
 console.log("Server running at http://localhost:%d", port);
-console.log(process.env);
 
-
-
-// const { Connection, Request } = require("tedious");
+const { Connection, Request } = require("tedious");
 
 // Create connection to database
-// const config = {
-//   authentication: {
-//     options: {
-//       userName: process.env.DB_USER,
-//       password: process.env.DB_PASS
-//     },
-//     type: "default"
-//   },
-//   server:  process.env.DB_URL,
-//   options: {
-//     database: process.env.DB_NAME,
-//     encrypt: true,
-//     port: 1433
-//   }
-// };
+const config = {
+  authentication: {
+    options: {
+      userName: "DB_USER", // update me
+      password: "DB_PASS" // update me
+    },
+    type: "default"
+  },
+  server: "DB_URL", // update me
+  options: {
+    database: "DB_NAME", //update me
+    encrypt: true
+  }
+};
 
-// const connection = new Connection(config);
 
-// // Attempt to connect and execute queries if connection goes through
-// connection.on("connect", err => {
-//   if (err) {
-//     console.error(err.message);
-//   } else {
-//     console.log('connected');
-//   }
-// });
+const connection = new Connection(config);
 
-// connection.connect();
+// Attempt to connect and execute queries if connection goes through
+connection.on("connect", err => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    queryDatabase();
+  }
+});
+
+
+function queryDatabase() {
+    const query = `
+        DROP TABLE IF EXISTS inventory;
+        CREATE TABLE inventory (id serial PRIMARY KEY, name VARCHAR(50), quantity INTEGER);
+        INSERT INTO inventory (name, quantity) VALUES ('banana', 150);
+        INSERT INTO inventory (name, quantity) VALUES ('orange', 154);
+        INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
+    `;
+
+    client
+        .query(query)
+        .then(() => {
+            console.log('Table created successfully!');
+            client.end(console.log('Closed client connection'));
+        })
+        .catch(err => console.log(err))
+        .then(() => {
+            console.log('Finished execution, exiting now');
+            process.exit();
+        });
+}

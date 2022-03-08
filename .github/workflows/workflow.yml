@@ -34,6 +34,10 @@ jobs:
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
+        sed "s/DB_URL/$DB_URL/g" index.js
+        sed "s/DB_USER/$DB_USER/g" index.js
+        sed "s/DB_PASS/$DB_PASS/g" index.js
+        sed "s/DB_NAME/$DB_NAME/g" index.js
         npm install
         npm install tedious
         npm run build --if-present
