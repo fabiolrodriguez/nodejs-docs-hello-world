@@ -10,45 +10,53 @@
 
 // console.log("Server running at http://localhost:%d", port);
 
-import { Connection, Request } from "tedious";
+// Import the mssql package
+var sql = require("mssql");
 
-// Create connection to database
-const config = {
-  authentication: {
-    options: {
-      userName: "DB_USER", // update me
-      password: "DB_PASS" // update me
-    },
-    type: "default"
-  },
-  server: "DB_URL", // update me
-  options: {
-    database: "DB_NAME", //update me
-    encrypt: true
-  }
+// Create a configuration object for our Azure SQL connection parameters
+var dbConfig = {
+ server: "DB_URL", // Use your SQL server name
+ database: "DB_NAME", // Database to connect to
+ user: "DB_USER", // Use your username
+ password: "DB_PASS", // Use your password
+ port: 1433,
+ // Since we're on Windows Azure, we need to set the following options
+ options: {
+       encrypt: true
+   }
 };
 
-const connection = new Connection(config);
+// This function connects to a SQL server, executes a SELECT statement,
+// and displays the results in the console.
+function getCustomers() {
+ // Create connection instance
+ var conn = new sql.Connection(dbConfig);
 
-// Attempt to connect and execute queries if connection goes through
-connection.on("connect", err => {
-  if (err) {
-    console.error(err.message);
-  } else {
-    queryDatabase();
-  }
-});
+ conn.connect()
+ // Successfull connection
+ .then(function () {
 
-connection.connect();
+   // Create request instance, passing in connection instance
+   var req = new sql.Request(conn);
 
-function queryDatabase() {
-  console.log("Creating table");
+   // Call mssql's query method passing in params
+   req.query("SELECT * FROM customers")
+   .then(function (recordset) {
+     console.log(recordset);
+     conn.close();
+   })
+   // Handle sql statement execution errors
+   .catch(function (err) {
+     console.log(err);
+     conn.close();
+   })
 
-  // Read all rows from table
-  const request = new Request(
-    ` DROP TABLE IF EXISTS inventory;
-    CREATE TABLE inventory;`,
-  );
-
-  connection.execSql(request);
+ })
+ // Handle connection errors
+ .catch(function (err) {
+   console.log(err);
+   conn.close();
+ });
 }
+
+getCustomers();
