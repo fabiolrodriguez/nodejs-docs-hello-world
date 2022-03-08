@@ -11,12 +11,28 @@
 // console.log("Server running at http://localhost:%d", port);
 
 
-var express = require('express');
-var app = express();
+// var express = require('express');
+// var app = express();
 
-app.get('*',function(req,res){
+// app.get('*',function(req,res){
 
-  res.send("OK");
+//   res.send("OK");
+
+// });
+
+
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
+
 
     // Import the mssql package
 
@@ -70,4 +86,3 @@ app.get('*',function(req,res){
 
     // getCustomers();
 
-});
