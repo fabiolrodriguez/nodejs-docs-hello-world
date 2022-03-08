@@ -11,52 +11,58 @@
 // console.log("Server running at http://localhost:%d", port);
 
 // Import the mssql package
-var sql = require("mssql");
 
-// Create a configuration object for our Azure SQL connection parameters
-var dbConfig = {
- server: "DB_URL", // Use your SQL server name
- database: "DB_NAME", // Database to connect to
- user: "DB_USER", // Use your username
- password: "DB_PASS", // Use your password
- port: 1433,
- // Since we're on Windows Azure, we need to set the following options
- options: {
-       encrypt: true
-   }
-};
+app.get('/',function(req,res){
 
-// This function connects to a SQL server, executes a SELECT statement,
-// and displays the results in the console.
-function getCustomers() {
- // Create connection instance
- var conn = new sql.Connection(dbConfig);
 
- conn.connect()
- // Successfull connection
- .then(function () {
+    var sql = require("mssql");
 
-   // Create request instance, passing in connection instance
-   var req = new sql.Request(conn);
+    // Create a configuration object for our Azure SQL connection parameters
+    var dbConfig = {
+    server: "DB_URL", // Use your SQL server name
+    database: "DB_NAME", // Database to connect to
+    user: "DB_USER", // Use your username
+    password: "DB_PASS", // Use your password
+    port: 1433,
+    // Since we're on Windows Azure, we need to set the following options
+    options: {
+          encrypt: true
+      }
+    };
 
-   // Call mssql's query method passing in params
-   req.query("SELECT * FROM customers")
-   .then(function (recordset) {
-     console.log(recordset);
-     conn.close();
-   })
-   // Handle sql statement execution errors
-   .catch(function (err) {
-     console.log(err);
-     conn.close();
-   })
+    // This function connects to a SQL server, executes a SELECT statement,
+    // and displays the results in the console.
+    function getCustomers() {
+    // Create connection instance
+    var conn = new sql.Connection(dbConfig);
 
- })
- // Handle connection errors
- .catch(function (err) {
-   console.log(err);
-   conn.close();
- });
-}
+    conn.connect()
+    // Successfull connection
+    .then(function () {
 
-getCustomers();
+      // Create request instance, passing in connection instance
+      var req = new sql.Request(conn);
+
+      // Call mssql's query method passing in params
+      req.query("SELECT * FROM customers")
+      .then(function (recordset) {
+        console.log(recordset);
+        conn.close();
+      })
+      // Handle sql statement execution errors
+      .catch(function (err) {
+        console.log(err);
+        conn.close();
+      })
+
+    })
+    // Handle connection errors
+    .catch(function (err) {
+      console.log(err);
+      conn.close();
+    });
+    }
+
+    getCustomers();
+
+});
