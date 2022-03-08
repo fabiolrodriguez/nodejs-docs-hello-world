@@ -10,62 +10,64 @@
 
 // console.log("Server running at http://localhost:%d", port);
 
-// Import the mssql package
 
 var express = require('express');
 var app = express();
 
 app.get('*',function(req,res){
 
+  res.send("OK");
 
-    var sql = require("mssql");
+    // Import the mssql package
 
-    // Create a configuration object for our Azure SQL connection parameters
-    var dbConfig = {
-    server: "DB_URL", // Use your SQL server name
-    database: "DB_NAME", // Database to connect to
-    user: "DB_USER", // Use your username
-    password: "DB_PASS", // Use your password
-    port: 1433,
-    // Since we're on Windows Azure, we need to set the following options
-    options: {
-          encrypt: true
-      }
-    };
+    // var sql = require("mssql");
 
-    // This function connects to a SQL server, executes a SELECT statement,
-    // and displays the results in the console.
-    function getCustomers() {
-    // Create connection instance
-    var conn = new sql.Connection(dbConfig);
+    // // Create a configuration object for our Azure SQL connection parameters
+    // var dbConfig = {
+    // server: "DB_URL", // Use your SQL server name
+    // database: "DB_NAME", // Database to connect to
+    // user: "DB_USER", // Use your username
+    // password: "DB_PASS", // Use your password
+    // port: 1433,
+    // // Since we're on Windows Azure, we need to set the following options
+    // options: {
+    //       encrypt: true
+    //   }
+    // };
 
-    conn.connect()
-    // Successfull connection
-    .then(function () {
+    // // This function connects to a SQL server, executes a SELECT statement,
+    // // and displays the results in the console.
+    // function getCustomers() {
+    // // Create connection instance
+    // var conn = new sql.Connection(dbConfig);
 
-      // Create request instance, passing in connection instance
-      var req = new sql.Request(conn);
+    // conn.connect()
+    // // Successfull connection
+    // .then(function () {
 
-      // Call mssql's query method passing in params
-      req.query("SELECT * FROM customers")
-      .then(function (recordset) {
-        res.send(recordset);
-        conn.close();
-      })
-      // Handle sql statement execution errors
-      .catch(function (err) {
-        res.send(err);
-        conn.close();
-      })
+    //   // Create request instance, passing in connection instance
+    //   var req = new sql.Request(conn);
 
-    })
-    // Handle connection errors
-    .catch(function (err) {
-      console.log(err);
-      conn.close();
-    });
-    }
+    //   // Call mssql's query method passing in params
+    //   req.query("SELECT * FROM customers")
+    //   .then(function (recordset) {
+    //     res.send(recordset);
+    //     conn.close();
+    //   })
+    //   // Handle sql statement execution errors
+    //   .catch(function (err) {
+    //     res.send(err);
+    //     conn.close();
+    //   })
 
-    getCustomers();
+    // })
+    // // Handle connection errors
+    // .catch(function (err) {
+    //   console.log(err);
+    //   conn.close();
+    // });
+    // }
+
+    // getCustomers();
 
 });
