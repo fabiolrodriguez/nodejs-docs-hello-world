@@ -12,11 +12,11 @@
 
 // Import the mssql package
 
-const app = require('express')();
+var express = require('express');
+var app = express();
 
-// If you receive a GET request with `url = '/test'`, always
-// send back an HTTP response with body 'ok'.
-app.get('/test', function routeHandler(req, res) {
+app.get('*',function(req,res){
+
 
     var sql = require("mssql");
 
@@ -54,7 +54,7 @@ app.get('/test', function routeHandler(req, res) {
       })
       // Handle sql statement execution errors
       .catch(function (err) {
-        console.log(err);
+        res.send(err);
         conn.close();
       })
 
