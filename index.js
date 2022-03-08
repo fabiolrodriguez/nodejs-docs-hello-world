@@ -48,13 +48,6 @@ function queryDatabase() {
   const request = new Request(
     ` DROP TABLE IF EXISTS inventory;
     CREATE TABLE inventory;`,
-    (err, rowCount) => {
-      if (err) {
-        console.error(err.message);
-      } else {
-        console.log(`${rowCount} row(s) returned`);
-      }
-    }
   );
 
   connection.execSql(request);
