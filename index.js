@@ -1,14 +1,14 @@
-const http = require('http');
+// const http = require('http');
 
-const server = http.createServer((request, response) => {
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Testing Action v2");
-});
+// const server = http.createServer((request, response) => {
+//     response.writeHead(200, {"Content-Type": "text/plain"});
+//     response.end("Testing Action v2");
+// });
 
-const port = process.env.PORT || 1337;
-server.listen(port);
+// const port = process.env.PORT || 1337;
+// server.listen(port);
 
-console.log("Server running at http://localhost:%d", port);
+// console.log("Server running at http://localhost:%d", port);
 
 
 const { Connection, Request } = require("tedious");
@@ -17,14 +17,14 @@ const { Connection, Request } = require("tedious");
 const config = {
   authentication: {
     options: {
-      userName: process.env["DB_USER"],
-      password: process.env["DB_PASS"]
+      userName: process.env.DB_USER,
+      password: process.env.DB_PASS
     },
     type: "default"
   },
-  server:  process.env["DB_URL"],
+  server:  process.env.DB_URL,
   options: {
-    database: process.env["DB_NAME"],
+    database: process.env.DB_NAME,
     encrypt: true,
     port: 1433
   }
