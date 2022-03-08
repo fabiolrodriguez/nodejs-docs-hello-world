@@ -28,7 +28,6 @@ const config = {
   }
 };
 
-
 const connection = new Connection(config);
 
 // Attempt to connect and execute queries if connection goes through
@@ -40,22 +39,23 @@ connection.on("connect", err => {
   }
 });
 
+connection.connect();
 
 function queryDatabase() {
-    const query = `
-        DROP TABLE IF EXISTS inventory;
-        CREATE TABLE inventory;
-    `;
+  console.log("Creating table");
 
-    client
-        .query(query)
-        .then(() => {
-            console.log('Table created successfully!');
-            client.end(console.log('Closed client connection'));
-        })
-        .catch(err => console.log(err))
-        .then(() => {
-            console.log('Finished execution, exiting now');
-            process.exit();
-        });
+  // Read all rows from table
+  const request = new Request(
+    ` DROP TABLE IF EXISTS inventory;
+    CREATE TABLE inventory;`,
+    (err, rowCount) => {
+      if (err) {
+        console.error(err.message);
+      } else {
+        console.log(`${rowCount} row(s) returned`);
+      }
+    }
+  );
+
+  connection.execSql(request);
 }
