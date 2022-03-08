@@ -11,24 +11,24 @@ server.listen(port);
 console.log("Server running at http://localhost:%d", port);
 
 
-const { Connection, Request } = require("tedious");
+// const { Connection, Request } = require("tedious");
 
 // Create connection to database
-const config = {
-  authentication: {
-    options: {
-      userName: process.env.DB_USER,
-      password: process.env.DB_PASS
-    },
-    type: "default"
-  },
-  server:  process.env.DB_URL,
-  options: {
-    database: process.env.DB_NAME,
-    encrypt: true,
-    port: 1433
-  }
-};
+// const config = {
+//   authentication: {
+//     options: {
+//       userName: process.env.DB_USER,
+//       password: process.env.DB_PASS
+//     },
+//     type: "default"
+//   },
+//   server:  process.env.DB_URL,
+//   options: {
+//     database: process.env.DB_NAME,
+//     encrypt: true,
+//     port: 1433
+//   }
+// };
 
 // const connection = new Connection(config);
 
