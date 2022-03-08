@@ -2,10 +2,7 @@ const http = require('http');
 
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.end("Testing DB_URL");
-    response.end("Testing DB_USER");
-    response.end("Testing DB_PASS");
-    response.end("Testing DB_NAME");
+    response.end("Testing DB_URL, DB_USER, DB_PASS, DB_NAME");
 });
 
 const port = process.env.PORT || 1337;
