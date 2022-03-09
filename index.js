@@ -1,9 +1,9 @@
 const http = require('http');
-var sql = require("mssql");
+// var sql = require("mssql");
 
 const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.send("ok");
+    response.end("ok");
 });
 
 const port = process.env.PORT || 1337;
